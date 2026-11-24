@@ -1,0 +1,21 @@
+# Example for existing source directories placed beside this launcher.
+# Works with Git checkouts or standalone copies (e.g. unpacked from Zenodo).
+# Relative paths are resolved from this profile's directory.
+[machine]
+kind = "local"
+root = "/mnt/local/zephon-vldb"
+
+[paths]
+arena = "../../dataloader-arena-public"
+plots = "../../zephon-vldb-plots"
+zephon = "../../zephon"
+
+# Required only for checkpoint preparation/measurement. Use your own S3 prefixes.
+[checkpoint]
+dataset = "s3://YOUR_BUCKET/vldb/vlm"
+artifacts = "s3://YOUR_BUCKET/vldb/checkpoints"
+aggregation = "s3://YOUR_BUCKET/vldb/aggregation"
+
+[checkpoint_data]
+source = "public"
+journal = "/home/ubuntu/.local/state/zephon-vldb/checkpoint-preparation"

@@ -1,0 +1,121 @@
+{
+  "world_size": 8,
+  "micro_batch_size": 4,
+  "global_batch_size": 128,
+  "verify_batches": 4,
+  "flush_intervals": [
+    1,
+    2,
+    8,
+    16,
+    32
+  ],
+  "chunk_sizes": [
+    1024,
+    2048,
+    4096
+  ],
+  "seeds": [
+    42,
+    123,
+    7
+  ],
+  "repetitions": [
+    1,
+    2,
+    3
+  ],
+  "progress_steps": [
+    100,
+    1000,
+    10000
+  ],
+  "lane_counts": [
+    8,
+    64,
+    512
+  ],
+  "loader": {
+    "name": "zephon-vlm",
+    "factory": "dataloader_arena.benchmarks.vlm.zephon:create_loader",
+    "config": {
+      "name": "vlm",
+      "format": "litdata",
+      "runner": "process",
+      "fetch_parallelism": 4,
+      "prefetch_buffer_size": 1024,
+      "prefetch_parallelism": 4,
+      "work_source": {
+        "chunk_size": 2048,
+        "shuffle_shards": true,
+        "shuffle_within_shard": true,
+        "shuffle_block_size": 512,
+        "exhausted_policy": "repeat"
+      },
+      "pipeline": {
+        "canonical_replicas": 8,
+        "mapping_strategy": "contiguous",
+        "flush_every_k_chunks": 16,
+        "deterministic": true,
+        "prefetch_batches": 16,
+        "default_stage_prefetch": 6,
+        "op_queue_capacity": 4,
+        "mp_context": "forkserver",
+        "mtp_mode": true,
+        "mtp_buffer": 4,
+        "aggregate_timeout_s": 180,
+        "aggregate_serializer": "msgpack",
+        "aggregate_compressor": "zstd",
+        "shutdown_mode": "hard",
+        "io_options": {
+          "cache": {
+            "limit_bytes": 805306368000,
+            "download_retry": 12,
+            "download_timeout": 180.0
+          }
+        }
+      },
+      "vlm": {
+        "tokenizer_name": "Qwen/Qwen3-1.7B",
+        "additional_special_tokens": [
+          "<|mm_bos|>",
+          "<|vision_start|>",
+          "<|vision_end|>",
+          "<|image_pad|>"
+        ],
+        "image_processor_name": "google/siglip2-so400m-patch14-384",
+        "tokens_per_image": 729,
+        "sequence_length": 2048,
+        "attn_implementation": "sdpa",
+        "user_message_template": "<|im_start|>user\n{content}<|im_end|>",
+        "assistant_message_template": "<|im_start|>assistant\n{content}<|im_end|>\n",
+        "start_sequence": "<|mm_bos|>",
+        "image_processor_use_fast": false,
+        "decoded_image_input": true
+      },
+      "packing": {
+        "window_size": 64,
+        "seed": 42,
+        "min_sequence_length": 50
+      },
+      "vlm_zephon": {
+        "fused_transforms": true,
+        "fused_parallelism": 8,
+        "shuffle_pack_mode": "per_lane",
+        "shuffle_pack_parallelism": 4,
+        "batch_construct_parallelism": 1,
+        "batch_metadata": "preserve_contributors"
+      }
+    }
+  },
+  "sources": {
+    "arena": "https://github.com/datologyai/dataloader-arena-public",
+    "arena_revision": "4ead2f082cac6ae3e902638151cedd4b291cb6fb",
+    "zephon_revision": "16a71891c7751169fa096c352a7f90fd0ac8be53",
+    "zephon_version": "0.1.0",
+    "litdata_version": "0.2.61",
+    "python": "3.13.15",
+    "dependencies": "arena uv.lock with checkpoint extra"
+  },
+  "cache_scope": "host"
+}

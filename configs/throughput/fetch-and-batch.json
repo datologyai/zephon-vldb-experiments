@@ -1,0 +1,129 @@
+{
+  "description": "Figure 6: shuffled fetch-and-batch throughput, including GIL and shared-memory panels.",
+  "seeds": [
+    42,
+    67,
+    1337
+  ],
+  "datasets": [
+    "text",
+    "vlm"
+  ],
+  "dops": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32,
+    64
+  ],
+  "batch_size": 32,
+  "warmup_batches": 16,
+  "measure_batches": {
+    "text": 7813,
+    "vlm": 2344
+  },
+  "configs": {
+    "grain": {
+      "pipeline": {
+        "prefetch": {
+          "buffer_size": 64,
+          "mode": "process"
+        }
+      },
+      "source": {
+        "options": {
+          "prefetch_factor": 2,
+          "seed": null,
+          "shuffle": true
+        },
+        "type": "litdata"
+      }
+    },
+    "litdata": {
+      "prefetch_factor": 64,
+      "shuffle": true
+    },
+    "zephon": {
+      "pipeline": {
+        "default_stage_prefetch": 8,
+        "deterministic": true,
+        "op_queue_capacity": 8,
+        "prefetch_batches": 64,
+        "shutdown_mode": "hard"
+      },
+      "work_source": {
+        "chunk_size": 2048,
+        "shuffle_shards": true,
+        "shuffle_within_shard": true
+      }
+    }
+  },
+  "variants": [
+    {
+      "system": "grain",
+      "python": "3.13",
+      "panels": [
+        "overview",
+        "gil",
+        "shm"
+      ]
+    },
+    {
+      "system": "litdata",
+      "python": "3.13",
+      "panels": [
+        "overview"
+      ]
+    },
+    {
+      "system": "zephon",
+      "python": "3.13",
+      "panels": [
+        "overview",
+        "gil",
+        "shm"
+      ],
+      "runner": "process",
+      "variant": "baseline"
+    },
+    {
+      "system": "zephon",
+      "python": "3.13",
+      "panels": [
+        "shm"
+      ],
+      "runner": "process",
+      "variant": "noshm"
+    },
+    {
+      "system": "zephon",
+      "python": "3.13",
+      "panels": [
+        "overview",
+        "gil"
+      ],
+      "runner": "threads",
+      "variant": "baseline"
+    },
+    {
+      "system": "zephon",
+      "python": "3.14t",
+      "panels": [
+        "gil"
+      ],
+      "runner": "process",
+      "variant": "baseline"
+    },
+    {
+      "system": "zephon",
+      "python": "3.14t",
+      "panels": [
+        "gil"
+      ],
+      "runner": "threads",
+      "variant": "baseline"
+    }
+  ]
+}

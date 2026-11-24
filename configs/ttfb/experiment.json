@@ -1,0 +1,36 @@
+{
+  "description": "Section 8.1.3: startup from loader construction to its first batch.",
+  "seeds": [
+    42,
+    67,
+    1337
+  ],
+  "repetitions": 1,
+  "fetch_dops": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32,
+    64
+  ],
+  "vlm_dops": [
+    8,
+    16,
+    32,
+    64
+  ],
+  "fetch_batch_size": 32,
+  "vlm_batch_size": 4,
+  "table_dop": 64,
+  "cache_policy": "best-effort page-cache drop",
+  "excluded_paper_baselines": {
+    "Streaming": "The implementation used for this paper baseline is not distributed with the public benchmark.",
+    "InternalDs": "The private vlmdataset implementation is absent from public arena."
+  },
+  "paper_vlm_selection": {
+    "loader_name": "zephon-fused-dop64-f8-p2c2",
+    "criterion": "fixed DOP64 VLM allocation for the startup results in section 8.1.3"
+  }
+}

@@ -1,0 +1,31 @@
+# Run the CLI on your laptop; all CPU work happens on this existing host.
+[machine]
+kind = "ssh"
+host = "YOUR_SSH_ALIAS"
+root = "/mnt/local/zephon-vldb"
+# identity_file = "~/.ssh/YOUR_KEY.pem" # Optional; ordinary SSH config also works.
+
+# Optional existing source directories on the benchmark machine.
+[paths]
+# arena = "/mnt/local/dataloader-arena-public"
+# plots = "/mnt/local/zephon-vldb-plots"
+# zephon = "/mnt/local/zephon"
+
+[controller]
+# Optional existing local sources; setup uploads them to the benchmark machine.
+# Without a plots override, the renderer is downloaded beside this launcher.
+# plots = "~/dev/zephon-vldb-plots"
+# arena = "~/dev/dataloader-arena-public"
+# zephon = "~/dev/zephon"
+
+[checkpoint]
+dataset = "s3://YOUR_BUCKET/vldb/vlm"
+artifacts = "s3://YOUR_BUCKET/vldb/checkpoints"
+aggregation = "s3://YOUR_BUCKET/vldb/aggregation"
+
+[checkpoint.env]
+AWS_DEFAULT_REGION = "us-east-1"
+
+[checkpoint_data]
+source = "public"
+journal = "/home/ubuntu/.local/state/zephon-vldb/checkpoint-preparation"

@@ -1,0 +1,25 @@
+# Public inputs for both throughput figures, including DOP 64.
+# FineWeb is tokenized during preparation; Mammoth is processed during loading.
+[text]
+samples = 524288
+minimum_chunks = 64
+chunk_mib = 64
+max_download_mib = 8192
+seed = 42
+sequence_length = 2048
+repository = "HuggingFaceFW/fineweb"
+revision = "9bb295ddab0e05d785b879661af7260fed5140fc"
+subset = "sample-10BT"
+tokenizer = "unsloth/Llama-3.2-1B"
+tokenizer_revision = "9535bd9b1d1dea6acafbdc4813b728796aeb28da"
+
+[vlm]
+shard_order = "bounded valid-record prefix quotas across image archives, missing quotas redistributed; uniform text-only sample; global seeded record shuffle before chunking"
+samples = 262144
+minimum_chunks = 64
+chunk_mib = 64
+max_download_mib = 262144
+seed = 42
+repository = "MAmmoTH-VL/MAmmoTH-VL-Instruct-12M"
+revision = "bac8f77cb8a8f9c4d0de407c6e3a589bd722562a"
+subset = "single-image (mammoth_si_10M.json)"

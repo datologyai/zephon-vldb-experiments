@@ -1,0 +1,5 @@
+# Zephon revisions. Changing a label's commit changes the experiment.
+# Default reproduction baseline: v0.1 release.
+["v0.1.0"]
+commit = "16a71891c7751169fa096c352a7f90fd0ac8be53"
+

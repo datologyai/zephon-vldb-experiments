@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "zephon-vldb-experiments"
+version = "0.1.0"
+description = "Reproduce the Zephon VLDB experiments"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+aws = ["boto3>=1.35.0", "click>=8.1.7"]
+training = [
+    "modal==1.6.4",
+    "zephon-modal @ git+https://github.com/datologyai/zephon-modal.git@78a41475f6bb197b32ff1bf2846da828c5a418d0",
+]
+
+[project.scripts]
+reproduce = "vldb_experiments.cli:entrypoint"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

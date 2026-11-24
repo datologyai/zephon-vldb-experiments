@@ -1,0 +1,29 @@
+# Same source, seed, quota sampling and shuffle as throughput/TTFB. Only scale,
+# output image representation, compression and destination differ.
+[data]
+mode = "vlm"
+image_representation = "decoded-rgb"
+compression = "zstd"
+revision = "bac8f77cb8a8f9c4d0de407c6e3a589bd722562a"
+samples = 9976290
+seed = 42
+chunk_mib = 64
+spool_mib = 256
+scratch_gib = 128
+workers = 8
+max_source_rows = 39905160
+# The exact quota sampler may reread productive gzip archives in later rounds.
+# Maximum transfer budget for source selection.
+max_download_tb = 12.0
+max_spool_tb = 6.0
+max_output_tb = 12.0
+
+[validation]
+# Conservative setup-error guards, NOT claims of equivalent distributions.
+# The recovered paper shard count supplies the reference lower bound.
+minimum_records = 8000000
+maximum_records = 12000000
+minimum_shards = 300000
+maximum_shards = 650000
+reference_shards_lower_bound = 475211
+

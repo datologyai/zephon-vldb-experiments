@@ -1,0 +1,18 @@
+# Run the CLI on the dedicated CPU host.
+[machine]
+kind = "local"
+root = "/mnt/local/zephon-vldb"
+
+# Required only for checkpoint preparation/measurement. Use your own S3 prefixes.
+[checkpoint]
+dataset = "s3://YOUR_BUCKET/vldb/vlm"
+artifacts = "s3://YOUR_BUCKET/vldb/checkpoints"
+aggregation = "s3://YOUR_BUCKET/vldb/aggregation"
+
+[checkpoint.env]
+AWS_DEFAULT_REGION = "us-east-1"
+
+[checkpoint_data]
+source = "public" # "existing" reuses a compatible S3 export without generation.
+# Metadata only; choose persistent storage, outside instance-store NVMe.
+journal = "/home/ubuntu/.local/state/zephon-vldb/checkpoint-preparation"

@@ -1,0 +1,308 @@
+{
+  "description": "Figure 7: fused VLM preprocessing, tokenization and sequence packing.",
+  "seeds": [
+    42,
+    67,
+    1337
+  ],
+  "dataset": "vlm",
+  "batch_size": 4,
+  "dops": [
+    8,
+    16,
+    32,
+    64
+  ],
+  "configs": {
+    "grain": {
+      "packing": {
+        "seed": 42,
+        "window_size": 64
+      },
+      "pipeline": {
+        "prefetch": {
+          "buffer_size": 2,
+          "mode": "process"
+        }
+      },
+      "source": {
+        "options": {
+          "shuffle": true
+        },
+        "type": "litdata"
+      },
+      "vlm": {
+        "attn_implementation": "flash_attention_2",
+        "decoded_image_input": false,
+        "sequence_length": 2048,
+        "tokenizer_name": "Qwen/Qwen3-0.6B",
+        "tokenizer_revision": "c1899de289a04d12100db370d81485cdf75e47ca"
+      }
+    },
+    "zephon": {
+      "packing": {
+        "seed": 42,
+        "window_size": 64
+      },
+      "pipeline": {
+        "default_stage_prefetch": 16,
+        "deterministic": true,
+        "mtp_mode": false,
+        "op_queue_capacity": 16,
+        "shutdown_mode": "hard"
+      },
+      "runner": "process",
+      "vlm": {
+        "attn_implementation": "flash_attention_2",
+        "decoded_image_input": false,
+        "sequence_length": 2048,
+        "tokenizer_name": "Qwen/Qwen3-0.6B",
+        "tokenizer_revision": "c1899de289a04d12100db370d81485cdf75e47ca"
+      },
+      "vlm_zephon": {
+        "fused_transforms": true,
+        "shuffle_pack_mode": "shared",
+        "flatten_payload": true
+      },
+      "work_source": {
+        "chunk_size": 2048,
+        "shuffle_shards": true,
+        "shuffle_within_shard": true
+      }
+    }
+  },
+  "loaders": [
+    {
+      "system": "grain",
+      "name": "grain-shuffled",
+      "python": "3.13",
+      "warmup_batches": 50,
+      "measure_batches": 2500
+    },
+    {
+      "system": "zephon",
+      "name": "zephon-fused",
+      "python": "3.13",
+      "warmup_batches": 50,
+      "measure_batches": 1500
+    }
+  ],
+  "allocations": [
+    {
+      "name": "zephon-fused-dop8-f1-p2c2",
+      "dop": 8,
+      "fetch": 1,
+      "fused": 5,
+      "prefetch_batches": 32,
+      "pack": 2,
+      "batch": 2
+    },
+    {
+      "name": "zephon-fused-dop8-f2",
+      "dop": 8,
+      "fetch": 2,
+      "fused": 5,
+      "prefetch_batches": 32
+    },
+    {
+      "name": "zephon-fused-dop8-f2-p2c2",
+      "dop": 8,
+      "fetch": 2,
+      "fused": 4,
+      "prefetch_batches": 32,
+      "pack": 2,
+      "batch": 2
+    },
+    {
+      "name": "zephon-fused-dop8-f4",
+      "dop": 8,
+      "fetch": 4,
+      "fused": 3,
+      "prefetch_batches": 32
+    },
+    {
+      "name": "zephon-fused-dop16-f2",
+      "dop": 16,
+      "fetch": 2,
+      "fused": 13,
+      "prefetch_batches": 32
+    },
+    {
+      "name": "zephon-fused-dop16-f2-p2c2",
+      "dop": 16,
+      "fetch": 2,
+      "fused": 12,
+      "prefetch_batches": 32,
+      "pack": 2,
+      "batch": 2
+    },
+    {
+      "name": "zephon-fused-dop16-f4-p2c2",
+      "dop": 16,
+      "fetch": 4,
+      "fused": 10,
+      "prefetch_batches": 32,
+      "pack": 2,
+      "batch": 2
+    },
+    {
+      "name": "zephon-fused-dop16-f6",
+      "dop": 16,
+      "fetch": 6,
+      "fused": 9,
+      "prefetch_batches": 32
+    },
+    {
+      "name": "zephon-fused-dop32-f10",
+      "dop": 32,
+      "fetch": 10,
+      "fused": 21,
+      "prefetch_batches": 64
+    },
+    {
+      "name": "zephon-fused-dop32-f2-p2c1",
+      "dop": 32,
+      "fetch": 2,
+      "fused": 28,
+      "prefetch_batches": 64,
+      "pack": 2
+    },
+    {
+      "name": "zephon-fused-dop32-f2-p4c1",
+      "dop": 32,
+      "fetch": 2,
+      "fused": 26,
+      "prefetch_batches": 64,
+      "pack": 4
+    },
+    {
+      "name": "zephon-fused-dop32-f4",
+      "dop": 32,
+      "fetch": 4,
+      "fused": 27,
+      "prefetch_batches": 64
+    },
+    {
+      "name": "zephon-fused-dop32-f4-p2c2",
+      "dop": 32,
+      "fetch": 4,
+      "fused": 26,
+      "prefetch_batches": 64,
+      "pack": 2,
+      "batch": 2
+    },
+    {
+      "name": "zephon-fused-dop32-f8-p2c2",
+      "dop": 32,
+      "fetch": 8,
+      "fused": 22,
+      "prefetch_batches": 64,
+      "pack": 2,
+      "batch": 2
+    },
+    {
+      "name": "zephon-fused-dop64-f16-p2c2",
+      "dop": 64,
+      "fetch": 16,
+      "fused": 46,
+      "prefetch_batches": 128,
+      "pack": 2,
+      "batch": 2
+    },
+    {
+      "name": "zephon-fused-dop64-f2-p4c1",
+      "dop": 64,
+      "fetch": 2,
+      "fused": 58,
+      "prefetch_batches": 128,
+      "pack": 4
+    },
+    {
+      "name": "zephon-fused-dop64-f2-p6c1",
+      "dop": 64,
+      "fetch": 2,
+      "fused": 56,
+      "prefetch_batches": 128,
+      "pack": 6
+    },
+    {
+      "name": "zephon-fused-dop64-f2-p8c1",
+      "dop": 64,
+      "fetch": 2,
+      "fused": 54,
+      "prefetch_batches": 128,
+      "pack": 8
+    },
+    {
+      "name": "zephon-fused-dop64-f20",
+      "dop": 64,
+      "fetch": 20,
+      "fused": 43,
+      "prefetch_batches": 128
+    },
+    {
+      "name": "zephon-fused-dop64-f4-p2c1",
+      "dop": 64,
+      "fetch": 4,
+      "fused": 58,
+      "prefetch_batches": 128,
+      "pack": 2
+    },
+    {
+      "name": "zephon-fused-dop64-f4-p4c1",
+      "dop": 64,
+      "fetch": 4,
+      "fused": 56,
+      "prefetch_batches": 128,
+      "pack": 4
+    },
+    {
+      "name": "zephon-fused-dop64-f4-p6c1",
+      "dop": 64,
+      "fetch": 4,
+      "fused": 54,
+      "prefetch_batches": 128,
+      "pack": 6
+    },
+    {
+      "name": "zephon-fused-dop64-f4-p8c1",
+      "dop": 64,
+      "fetch": 4,
+      "fused": 52,
+      "prefetch_batches": 128,
+      "pack": 8
+    },
+    {
+      "name": "zephon-fused-dop64-f6-p4c1",
+      "dop": 64,
+      "fetch": 6,
+      "fused": 54,
+      "prefetch_batches": 128,
+      "pack": 4
+    },
+    {
+      "name": "zephon-fused-dop64-f8",
+      "dop": 64,
+      "fetch": 8,
+      "fused": 55,
+      "prefetch_batches": 128
+    },
+    {
+      "name": "zephon-fused-dop64-f8-p2c2",
+      "dop": 64,
+      "fetch": 8,
+      "fused": 54,
+      "prefetch_batches": 128,
+      "pack": 2,
+      "batch": 2
+    },
+    {
+      "name": "zephon-fused-dop64-f8-p4c1",
+      "dop": 64,
+      "fetch": 8,
+      "fused": 52,
+      "prefetch_batches": 128,
+      "pack": 4
+    }
+  ]
+}

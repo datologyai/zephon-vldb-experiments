@@ -1,0 +1,21 @@
+# Startup metadata scale from the original exports. Public source pins,
+# tokenizer, seed and VLM mixing are inherited from ../throughput/data.toml.
+# Shard lists contain reference record counts only, never private data.
+[text]
+samples = 4860078
+minimum_chunks = 622
+shard_samples = "ttfb/text-shards.json"
+shard_file_bytes = 39852644576
+max_download_mib = 65536
+
+[vlm]
+samples = 203077
+minimum_chunks = 1593
+shard_samples = "ttfb/vlm-shards.json"
+shard_file_bytes = 102890428121
+max_download_mib = 262144
+
+[validation]
+# VLM payloads are real new records: matching metadata does not match every byte.
+maximum_size_difference = 0.10
+size_warning_difference = 0.05

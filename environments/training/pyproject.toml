@@ -1,0 +1,39 @@
+[project]
+name = "zephon-vldb-training"
+version = "0.1.0"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "modal==1.6.4",
+    "zephon[hf,parquet]==0.2.1",
+    "torch==2.16.0.dev20261102+cu130",
+    "triton==3.9.0+gitb7ddcf86",
+    "grain==0.2.18",
+    "datasets>=3.6.0,<4.8.0",
+    "pyarrow<26",
+    "tensorboard",
+    "wandb",
+    "tokenizers>=0.22.0,<=0.23.0",
+    "renderers==0.1.12",
+    "safetensors",
+    "einops",
+    "pillow",
+    "spmd_types==0.3.1",
+    "attn-gym[linear,cudnn] @ git+https://github.com/meta-pytorch/attention-gym.git@26beb363c6d1328851bfc5c9c8691fa2066bd1fa",
+    "torch_remat==0.2.2",
+    "torch_checkpointing==0.1.1",
+    "transformers>=4.44.0",
+    "huggingface_hub"
+]
+
+[tool.uv]
+package = false
+environments = ["sys_platform == 'linux' and platform_machine == 'x86_64'"]
+
+[[tool.uv.index]]
+name = "pytorch-cu130"
+url = "https://download.pytorch.org/whl/nightly/cu130"
+explicit = true
+
+[tool.uv.sources]
+torch = { index = "pytorch-cu130" }
+triton = { index = "pytorch-cu130" }

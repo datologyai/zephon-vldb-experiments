@@ -1,0 +1,82 @@
+{
+  "schema": 2,
+  "arms": [
+    "control",
+    "zephon"
+  ],
+  "seed": 42,
+  "steps": 300,
+  "checkpoint_step": 150,
+  "baseline_dp": 2,
+  "resume_dps": [
+    1,
+    4,
+    8
+  ],
+  "canonical_replicas": 64,
+  "sequences_per_step": 448,
+  "sequence_length": 4096,
+  "model": "Llama3-1B-random-init",
+  "gpu": "H100",
+  "gpus_per_node": 8,
+  "timeout_seconds": 14400,
+  "sources": {
+    "torchtitan": "5db735a9d82a795f784e1845dd6bc5ffcda13ff2",
+    "zephon": "0.2.1",
+    "torch": "2.16.0.dev20261102+cu130",
+    "modal": "1.6.4",
+    "zephon_modal": "78a41475f6bb197b32ff1bf2846da828c5a418d0"
+  },
+  "dataset": {
+    "repository": "HuggingFaceFW/fineweb-edu",
+    "revision": "87f09149ef4734204d70ed1d046ddc9ca3f2b8f9",
+    "files": {
+      "sample/10BT/000_00000.parquet": "b1ba7b2ce4cb5ea6ef42dca40263eabb85f37700d01693a68e9b30a31d78e871",
+      "sample/10BT/001_00000.parquet": "3fcf2dc69cd52503986276d3d2d26a8c356d0f2ea28a0de4fdbda8cf87755693"
+    }
+  },
+  "tokenizer": {
+    "repository": "unsloth/Llama-3.2-1B",
+    "revision": "9535bd9b1d1dea6acafbdc4813b728796aeb28da",
+    "files": {
+      "config.json": "8f028e2cd88148fad38c7dece460947681adf6178e46e11ece9742aa49b378dd",
+      "tokenizer_config.json": "8ca815f697b8f6953d9bad3130ddd6238b99d36c20fde052cf730207ac0926d4",
+      "tokenizer.json": "6b9e4e7fb171f92fd137b777cc2714bf87d11576700a1dcd7a399e7bbe39537b"
+    }
+  },
+  "data_seed": 1338,
+  "local_batch": 7,
+  "optimizer": {
+    "lr": 0.0007908,
+    "betas": [
+      0.9,
+      0.95
+    ],
+    "eps": 1e-08,
+    "weight_decay": 0.1,
+    "max_norm": 1.0
+  },
+  "lr_scheduler": {
+    "warmup_steps": 400,
+    "total_steps": 10899,
+    "decay_type": "sqrt",
+    "decay_ratio": 0.2,
+    "min_lr_factor": 0.05
+  },
+  "loader": {
+    "chunk_size": 16384,
+    "shuffle_shards": true,
+    "shuffle_within_shard": true,
+    "shuffle_block_size": 163800,
+    "token_estimation": true,
+    "shuffle_after_pack": true,
+    "shuffle_buffer_size": 2048,
+    "repeat": true,
+    "tokenize_special_tokens": "bos_eos",
+    "pack_algorithm": "wrap",
+    "fetch_parallelism": 4,
+    "tokenize_parallelism": 4,
+    "pack_parallelism": 1,
+    "mtp_mode": true
+  }
+}

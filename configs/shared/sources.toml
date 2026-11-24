@@ -1,0 +1,8 @@
+# Pinned benchmark and plotting dependencies. Zephon pins are in revisions.toml.
+[arena]
+repository = "datologyai/dataloader-arena-public"
+revision = "4ead2f082cac6ae3e902638151cedd4b291cb6fb"
+
+[plots]
+repository = "datologyai/zephon-vldb-plots"
+revision = "bf986c143ca806cfbcf9e44ebe21b165c18f041c"

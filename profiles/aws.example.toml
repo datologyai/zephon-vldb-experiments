@@ -1,0 +1,41 @@
+# machine create uses your AWS credentials on the controller.
+[machine]
+kind = "aws"
+root = "/mnt/local/zephon-vldb"
+connect = "ssm" # Or "private-ip" if the controller has VPC connectivity.
+user = "ubuntu"
+identity_file = "~/.ssh/YOUR_KEY.pem"
+
+[aws]
+name = "vldb-reproduction"
+region = "us-east-1"
+instance_type = "r8id.48xlarge"
+security_group = "YOUR_SECURITY_GROUP"
+subnet_tag = "YOUR_SUBNET_NAME"
+key_pair_name = "YOUR_KEY"
+iam_instance_profile = "YOUR_INSTANCE_PROFILE"
+
+# Optional existing source directories on the benchmark machine.
+[paths]
+# arena = "/mnt/local/dataloader-arena-public"
+# plots = "/mnt/local/zephon-vldb-plots"
+# zephon = "/mnt/local/zephon"
+
+[controller]
+# Optional existing local sources; setup uploads them to the benchmark machine.
+# Without a plots override, the renderer is downloaded beside this launcher.
+# plots = "~/dev/zephon-vldb-plots"
+# arena = "~/dev/dataloader-arena-public"
+# zephon = "~/dev/zephon"
+
+[checkpoint]
+dataset = "s3://YOUR_BUCKET/vldb/vlm"
+artifacts = "s3://YOUR_BUCKET/vldb/checkpoints"
+aggregation = "s3://YOUR_BUCKET/vldb/aggregation"
+
+[checkpoint.env]
+AWS_DEFAULT_REGION = "us-east-1"
+
+[checkpoint_data]
+source = "public"
+journal = "/home/ubuntu/.local/state/zephon-vldb/checkpoint-preparation"

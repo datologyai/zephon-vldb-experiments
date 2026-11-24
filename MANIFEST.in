@@ -1,0 +1,5 @@
+include README.md
+recursive-include configs *.json *.toml *.md
+recursive-include environments *.toml *.lock *.md
+include profiles/*.example.toml
+recursive-include docs *.md

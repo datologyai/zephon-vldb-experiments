@@ -1,0 +1,24 @@
+{
+  "tokenizer": {
+    "model": "Qwen/Qwen3-1.7B",
+    "revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+    "patterns": [
+      "tokenizer.json",
+      "tokenizer_config.json",
+      "special_tokens_map.json",
+      "added_tokens.json",
+      "vocab.json",
+      "merges.txt",
+      "config.json"
+    ]
+  },
+  "image_processor": {
+    "model": "google/siglip2-so400m-patch14-384",
+    "revision": "e8e487298228002f3d8a82e0cd5c8ea9c567f57f",
+    "patterns": [
+      "preprocessor_config.json",
+      "processor_config.json",
+      "config.json"
+    ]
+  }
+}
