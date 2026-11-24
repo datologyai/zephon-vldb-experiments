@@ -132,7 +132,7 @@ def test_shared_environment_uses_lock_and_exact_paper_extras(tmp_path):
             provenance,
             "source_state",
             side_effect=[
-                {"revision": "4ead2f082cac6ae3e902638151cedd4b291cb6fb"},
+                {"revision": "26721812df6491a8d8b460236df30a69bdc69190"},
                 {"revision": "16a71891c7751169fa096c352a7f90fd0ac8be53"},
             ],
         ),
