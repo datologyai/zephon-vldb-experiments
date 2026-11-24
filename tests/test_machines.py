@@ -109,7 +109,7 @@ def test_aws_calls_arena_once_and_preserves_launch_identity(tmp_path):
     (arena / "SOURCE.json").write_text(
         json.dumps(
             dict(
-                revision="4ead2f082cac6ae3e902638151cedd4b291cb6fb",
+                revision="26721812df6491a8d8b460236df30a69bdc69190",
                 files={"README.md": hashlib.sha256(b"fixture").hexdigest()},
             )
         )

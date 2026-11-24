@@ -110,7 +110,7 @@
   },
   "sources": {
     "arena": "https://github.com/datologyai/dataloader-arena-public",
-    "arena_revision": "4ead2f082cac6ae3e902638151cedd4b291cb6fb",
+    "arena_revision": "26721812df6491a8d8b460236df30a69bdc69190",
     "zephon_revision": "16a71891c7751169fa096c352a7f90fd0ac8be53",
     "zephon_version": "0.1.0",
     "litdata_version": "0.2.61",
